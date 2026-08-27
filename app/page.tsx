@@ -202,7 +202,7 @@ export default function Home() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       root.style.setProperty('--scroll-progress', `${max > 0 ? (window.scrollY / max) * 100 : 0}%`);
     };
-    const observed = root.querySelectorAll('.manifesto-grid, .cinema-panel, .section-heading, .feature-card, .control-grid article, .open-inner');
+    const observed = root.querySelectorAll('.manifesto-grid, .flow-step, .cinema-panel, .section-heading, .feature-card, .control-grid article, .open-inner');
     observed.forEach((element) => element.classList.add('will-reveal'));
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible'));
@@ -237,6 +237,7 @@ export default function Home() {
 
   return (
     <main ref={mainRef}>
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <InteractiveBackdrop />
       <div className="scroll-progress" aria-hidden="true" />
       <nav className="site-nav" aria-label="Primary navigation">
@@ -246,6 +247,7 @@ export default function Home() {
         </a>
         <div className="nav-links">
           <a href="#experience">Experience</a>
+          <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
           <a href="#open-source">Open source</a>
         </div>
@@ -259,10 +261,10 @@ export default function Home() {
         <h1><span>Make movie night</span><br /><em>feel like an event.</em></h1>
         <p className="hero-copy">One obsessive Windows app for discovering what’s next—and experiencing every frame on your terms.</p>
         <div className="hero-actions">
-          <a className="button primary" href="https://github.com/StreameeApp/Streamee-app/releases/latest">Get Streamee <span>↗</span></a>
+          <a className="button primary" href="https://github.com/StreameeApp/Streamee-app/releases/latest">Get Streamee <span aria-hidden="true">↗</span></a>
           <a className="button secondary" href="https://github.com/StreameeApp/Streamee-app"><GithubMark /> View on GitHub</a>
         </div>
-        <p className="compatibility"><span>⊞</span> Windows 10 &amp; 11 <b>•</b> Free &amp; open source <b>•</b> Powered by MPV</p>
+        <p className="compatibility"><span aria-hidden="true">⊞</span> Windows 10 &amp; 11 <b>•</b> Free &amp; open source <b>•</b> Downloaded from GitHub Releases</p>
 
         <div className="product-stage" ref={stageRef} aria-label="Interactive Streamee desktop application preview">
           <div className="stage-orbit orbit-one" aria-hidden="true" />
@@ -273,7 +275,7 @@ export default function Home() {
               <div className="window-brand"><StreameeMark className="mini-mark" /> Streamee</div>
               <div className="window-controls"><i /><i /><i /></div>
             </div>
-            <img src="/streamee-board.png" alt="Streamee discovery board showing Continue Watching and a personal media library" />
+            <img src="/streamee-board.png" alt="Streamee discovery board showing Continue Watching and a personal media library" width="2000" height="1125" fetchPriority="high" />
           </div>
           <aside className="floating-note note-left"><span className="note-icon">◫</span><span><small>LOCAL FIRST</small><strong>Your choices stay yours.</strong></span></aside>
           <aside className="floating-note note-right"><span className="note-icon">⌁</span><span><small>POWERED BY MPV</small><strong>Playback without compromise.</strong></span></aside>
@@ -284,7 +286,8 @@ export default function Home() {
 
       <div className="kinetic-ribbon" aria-hidden="true"><div className="ribbon-track"><span>{ribbonText}</span><span>{ribbonText}</span><span>{ribbonText}</span><span>{ribbonText}</span></div></div>
 
-      <section className="manifesto section-shell" id="experience">
+      <section className="manifesto section-shell" id="main-content" tabIndex={-1}>
+        <span className="anchor-target" id="experience" aria-hidden="true" />
         <p className="kicker">01 / THE EXPERIENCE</p>
         <div className="manifesto-grid">
           <h2>Not another<br />streaming service.<br /><em>Your command center.</em></h2>
@@ -297,6 +300,34 @@ export default function Home() {
               <span><b>03</b> Your history</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="flow-section section-shell" id="how-it-works" aria-labelledby="flow-title">
+        <div className="flow-heading">
+          <p className="kicker">FROM DISCOVERY TO PLAYBACK</p>
+          <h2 id="flow-title">One place.<br /><em>Your whole ritual.</em></h2>
+          <p>Streamee connects the parts of movie night without pretending to be the catalog. You decide what to connect and what you are authorized to watch.</p>
+        </div>
+        <div className="flow-steps">
+          <article className="flow-step">
+            <span>01</span>
+            <div className="flow-signal" aria-hidden="true"><i /><i /><i /></div>
+            <h3>Connect what you trust.</h3>
+            <p>Add compatible services and sign into the accounts you choose. Sensitive configuration stays behind the desktop interface.</p>
+          </article>
+          <article className="flow-step">
+            <span>02</span>
+            <div className="flow-signal flow-signal-search" aria-hidden="true"><i /><i /><i /></div>
+            <h3>Find the right night.</h3>
+            <p>Move through discovery, watchlists, history, and rich title detail without bouncing between browser tabs.</p>
+          </article>
+          <article className="flow-step">
+            <span>03</span>
+            <div className="flow-signal flow-signal-play" aria-hidden="true"><i /><i /><i /></div>
+            <h3>Make playback yours.</h3>
+            <p>Choose a source you are authorized to play, then let MPV, subtitles, smart skipping, and picture controls take over.</p>
+          </article>
         </div>
       </section>
 
@@ -319,7 +350,7 @@ export default function Home() {
         </div>
         <div className="cinema-shot">
           <div className="shot-label"><i /> TITLE VIEW</div>
-          <img src="/streamee-details.png" alt="Streamee title details interface with cast, ratings and related titles" />
+          <img src="/streamee-details.png" alt="Streamee title details interface with cast, ratings and related titles" width="2000" height="1125" loading="lazy" />
         </div>
       </section>
 
@@ -372,9 +403,10 @@ export default function Home() {
           <h2>Built in the open.<br /><em>Yours to inspect.</em></h2>
           <p>Streamee is free software for Windows, built with Tauri, Rust, React, TypeScript, and MPV. Follow the code, report an issue, or help shape what comes next.</p>
           <div className="hero-actions">
-            <a className="button primary" href="https://github.com/StreameeApp/Streamee-app/releases/latest">Download latest release <span>↗</span></a>
+            <a className="button primary" href="https://github.com/StreameeApp/Streamee-app/releases/latest">Download latest release <span aria-hidden="true">↗</span></a>
             <a className="button secondary" href="https://github.com/StreameeApp/Streamee-app"><GithubMark /> Explore the repository</a>
           </div>
+          <p className="release-note">Windows 10 &amp; 11 <i /> Source available <i /> No bundled media</p>
           <div className="tech-line"><span>TAURI 2</span><i /><span>RUST</span><i /><span>REACT</span><i /><span>MPV</span><i /><span>GPL-3.0+</span></div>
         </div>
       </section>
