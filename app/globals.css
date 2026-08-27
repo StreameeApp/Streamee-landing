@@ -84,3 +84,17 @@ main{--pointer-x:50vw;--pointer-y:30vh;--scroll-progress:0%;overflow:clip}.scrol
 .meter{--meter-level:58%;overflow:hidden}.meter-reading{position:relative}.meter-reading strong{animation:meterReading .45s cubic-bezier(.16,1,.3,1) both}.meter-reading>span{position:absolute;right:0;bottom:8px;color:#8ff2ae;font-family:var(--font-geist-mono);font-size:8px;animation:meterReading .45s ease both}.meter-line{height:7px;background:linear-gradient(90deg,#25272c 0 74%,rgba(255,95,56,.35) 74%);overflow:visible}.meter-line:before{width:var(--meter-level);background:linear-gradient(90deg,#ee6a36 0,#ffb05f 72%,#f4e8d7);transition:width .65s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 16px rgba(255,138,76,.28)}.meter-line i{left:var(--meter-level);transition:left .65s cubic-bezier(.2,.8,.2,1);width:10px;height:18px;border-radius:1px;box-shadow:0 0 16px rgba(255,255,255,.8)}
 @keyframes ribbonLoop{to{transform:translateX(-25%)}}@keyframes captionArrive{from{opacity:0;transform:translateY(20px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}@keyframes captionRead{from{transform:translateX(-150%)}to{transform:translateX(420%)}}@keyframes skipPlayhead{0%{left:9%}32%{left:34%}43%{left:48%}44%{left:58%}75%{left:89%}100%{left:89%}}@keyframes skipFlash{0%,40%{opacity:0;transform:translateY(5px)}44%,60%{opacity:1;transform:translateY(0)}70%,100%{opacity:0}}@keyframes bufferBreathe{50%{opacity:.45}}@keyframes meterReading{from{opacity:.2;transform:translateY(7px);filter:blur(3px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 @media(max-width:800px){.interactive-backdrop{opacity:.6}.statement-line{font-size:clamp(31px,10.2vw,72px);white-space:normal;line-height:.98;margin:7px 0}.statement-line.outline{text-align:left}.product-stage:before{inset:-30% -5%}.stage-halo{width:120%;left:-10%}.caption-demo strong{white-space:normal}.timeline-demo{left:25px;right:25px}.ribbon-track>span{font-size:14px}}
+
+/* Page-wide constellation and authentic app identity */
+main{position:relative;isolation:isolate;background:rgba(8,9,11,.82)}
+main>.interactive-backdrop{position:fixed;z-index:0;inset:0;width:100vw;height:100vh;opacity:.82;mask-image:none;mix-blend-mode:screen}
+main>.hero,main>.kinetic-ribbon,main>.manifesto,main>.statement,main>.cinema-panel,main>.feature-section,main>.control-section,main>.open-section,main>footer{position:relative;z-index:1}
+main>.site-nav{z-index:100}main>.scroll-progress{z-index:110}
+.hero{background:linear-gradient(180deg,rgba(9,10,13,.88) 0,rgba(13,13,16,.9) 48%,rgba(8,9,11,.84) 100%)}
+.open-section{background:rgba(241,236,229,.975)}
+.brand-mark,.mini-mark{overflow:hidden;background:transparent;box-shadow:0 0 34px rgba(255,138,76,.24)}
+.brand-mark img,.mini-mark img{display:block;width:100%;height:100%;object-fit:cover}
+.mini-mark{width:15px;height:15px}
+.product-stage .window:before{display:block;inset:38px 0 0;background:linear-gradient(180deg,rgba(255,119,58,.045),rgba(255,119,58,.085) 54%,rgba(255,119,58,.045) 100%);mix-blend-mode:screen;opacity:.82}
+.product-stage .window:after{display:none}
+@media(max-width:800px){main>.interactive-backdrop{opacity:.68}}

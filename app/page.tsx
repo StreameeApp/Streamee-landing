@@ -8,6 +8,10 @@ const GithubMark = () => (
   </svg>
 );
 
+const StreameeMark = ({ className = 'brand-mark' }: { className?: string }) => (
+  <span className={className} aria-hidden="true"><img src="/streamee-icon.png" alt="" /></span>
+);
+
 const ribbonText = <>DISCOVER <i /> WATCH <i /> FEEL EVERYTHING <i /> YOUR MEDIA <i /> YOUR RULES <i /></>;
 
 function InteractiveBackdrop() {
@@ -23,13 +27,16 @@ function InteractiveBackdrop() {
     let height = 0;
     let pointerX = -1000;
     let pointerY = -1000;
+    let scrollY = window.scrollY;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const particles = Array.from({ length: 58 }, (_, index) => ({
-      x: (index * 137.5) % 1000,
-      y: (index * 83.7) % 700,
+    const particleCount = window.innerWidth < 700 ? 74 : 124;
+    const particles = Array.from({ length: particleCount }, (_, index) => ({
+      x: (index * 137.5) % 1800,
+      y: (index * 83.7) % 1000,
       vx: Math.sin(index * 2.1) * .12,
       vy: Math.cos(index * 1.7) * .1,
-      size: index % 7 === 0 ? 1.7 : .8,
+      size: index % 9 === 0 ? 1.8 : index % 4 === 0 ? 1.05 : .72,
+      depth: .025 + (index % 6) * .012,
     }));
     const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
@@ -44,16 +51,17 @@ function InteractiveBackdrop() {
       });
     };
     const move = (event: PointerEvent) => {
-      const bounds = canvas.getBoundingClientRect();
-      pointerX = event.clientX - bounds.left;
-      pointerY = event.clientY - bounds.top;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
     };
+    const scroll = () => { scrollY = window.scrollY; };
     const leave = () => { pointerX = -1000; pointerY = -1000; };
     const draw = (time: number) => {
       context.clearRect(0, 0, width, height);
       particles.forEach((particle) => {
+        const displayY = ((particle.y - scrollY * particle.depth) % height + height) % height;
         const dx = pointerX - particle.x;
-        const dy = pointerY - particle.y;
+        const dy = pointerY - displayY;
         const distance = Math.hypot(dx, dy);
         if (!reducedMotion && distance < 240 && distance > 1) {
           const force = (1 - distance / 240) * .035;
@@ -75,20 +83,23 @@ function InteractiveBackdrop() {
         for (let second = first + 1; second < particles.length; second += 1) {
           const a = particles[first];
           const b = particles[second];
-          const distance = Math.hypot(a.x - b.x, a.y - b.y);
-          if (distance < 128) {
+          const aY = ((a.y - scrollY * a.depth) % height + height) % height;
+          const bY = ((b.y - scrollY * b.depth) % height + height) % height;
+          const distance = Math.hypot(a.x - b.x, aY - bY);
+          if (distance < 112) {
             context.beginPath();
-            context.moveTo(a.x, a.y);
-            context.lineTo(b.x, b.y);
-            context.strokeStyle = `rgba(255, 138, 76, ${(1 - distance / 128) * .13})`;
+            context.moveTo(a.x, aY);
+            context.lineTo(b.x, bY);
+            context.strokeStyle = `rgba(255, 138, 76, ${(1 - distance / 112) * .16})`;
             context.lineWidth = .65;
             context.stroke();
           }
         }
       }
       particles.forEach((particle) => {
+        const displayY = ((particle.y - scrollY * particle.depth) % height + height) % height;
         context.beginPath();
-        context.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        context.arc(particle.x, displayY, particle.size, 0, Math.PI * 2);
         context.fillStyle = particle.size > 1 ? 'rgba(255,160,104,.55)' : 'rgba(219,221,226,.3)';
         context.fill();
       });
@@ -107,12 +118,14 @@ function InteractiveBackdrop() {
     resize();
     window.addEventListener('resize', resize);
     window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('scroll', scroll, { passive: true });
     window.addEventListener('blur', leave);
     draw(0);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', move);
+      window.removeEventListener('scroll', scroll);
       window.removeEventListener('blur', leave);
     };
   }, []);
@@ -224,10 +237,11 @@ export default function Home() {
 
   return (
     <main ref={mainRef}>
+      <InteractiveBackdrop />
       <div className="scroll-progress" aria-hidden="true" />
       <nav className="site-nav" aria-label="Primary navigation">
         <a className="brand" href="#top" aria-label="Streamee home">
-          <span className="brand-mark"><span /></span>
+          <StreameeMark />
           <span>Streamee</span>
         </a>
         <div className="nav-links">
@@ -239,7 +253,6 @@ export default function Home() {
       </nav>
 
       <section className="hero" id="top" onPointerMove={moveStage} onPointerLeave={resetStage}>
-        <InteractiveBackdrop />
         <div className="hero-glow" aria-hidden="true" />
         <div className="hero-index" aria-hidden="true">STREAMEE / 2026<br />DESKTOP MEDIA EXPERIENCE</div>
         <div className="eyebrow"><i /> This is your screening room</div>
@@ -257,7 +270,7 @@ export default function Home() {
           <div className="stage-halo" aria-hidden="true" />
           <div className="window">
             <div className="window-bar">
-              <div className="window-brand"><span className="mini-mark" /> Streamee</div>
+              <div className="window-brand"><StreameeMark className="mini-mark" /> Streamee</div>
               <div className="window-controls"><i /><i /><i /></div>
             </div>
             <img src="/streamee-board.png" alt="Streamee discovery board showing Continue Watching and a personal media library" />
@@ -367,7 +380,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <div className="footer-brand"><span className="brand-mark"><span /></span><strong>Streamee</strong></div>
+        <div className="footer-brand"><StreameeMark /><strong>Streamee</strong></div>
         <p>Discover freely. Watch responsibly.</p>
         <div><a href="https://github.com/StreameeApp/Streamee-app">GitHub</a><a href="https://github.com/StreameeApp/Streamee-app/releases/latest">Releases</a><a href="https://github.com/StreameeApp/Streamee-app/blob/main/LICENSE">License</a></div>
       </footer>
