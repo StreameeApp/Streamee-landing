@@ -95,6 +95,8 @@ main>.site-nav{z-index:100}main>.scroll-progress{z-index:110}
 .brand-mark,.mini-mark{overflow:hidden;background:transparent;box-shadow:0 0 34px rgba(255,138,76,.24)}
 .brand-mark img,.mini-mark img{display:block;width:100%;height:100%;object-fit:cover}
 .mini-mark{width:15px;height:15px}
-.product-stage .window:before{display:block;inset:38px 0 0;background:linear-gradient(180deg,rgba(255,119,58,.045),rgba(255,119,58,.085) 54%,rgba(255,119,58,.045) 100%);mix-blend-mode:screen;opacity:.82}
+.product-stage .window:before{display:none}
 .product-stage .window:after{display:none}
+.product-stage .window img{filter:saturate(.9) contrast(1.03)}
+.product-stage:before,.stage-halo,.stage-orbit{display:none}
 @media(max-width:800px){main>.interactive-backdrop{opacity:.68}}
