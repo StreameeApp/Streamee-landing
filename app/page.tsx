@@ -14,6 +14,36 @@ const StreameeMark = ({ className = 'brand-mark' }: { className?: string }) => (
 
 const ribbonText = <>DISCOVER <i /> WATCH <i /> FEEL EVERYTHING <i /> YOUR MEDIA <i /> YOUR RULES <i /></>;
 
+const productViews = [
+  {
+    id: 'recommendations',
+    index: '01',
+    label: 'Recommendations',
+    title: 'A better next watch.',
+    description: 'Jump from one title into a full field of related picks, with ratings and release context ready to scan.',
+    src: '/streamee-recommendations.png',
+    alt: 'Streamee recommendations screen showing a personalized grid of related movies',
+  },
+  {
+    id: 'statistics',
+    index: '02',
+    label: 'Statistics',
+    title: 'Your history, made visible.',
+    description: 'See watch time, streaks, activity, viewing habits, and the balance between movies and television.',
+    src: '/streamee-statistics.png',
+    alt: 'Streamee statistics dashboard showing watch time, viewing activity, and personal records',
+  },
+  {
+    id: 'addons',
+    index: '03',
+    label: 'Add-ons',
+    title: 'Sources on your terms.',
+    description: 'Install, test, prioritize, and manage compatible add-ons while sensitive URLs stay in Windows Credential Manager.',
+    src: '/streamee-addons.png',
+    alt: 'Streamee add-on settings screen showing source installation and management controls',
+  },
+] as const;
+
 function InteractiveBackdrop() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -190,6 +220,7 @@ function LiveMeter() {
 export default function Home() {
   const mainRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const [activeView, setActiveView] = useState(0);
 
   useEffect(() => {
     const root = mainRef.current;
@@ -202,7 +233,7 @@ export default function Home() {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       root.style.setProperty('--scroll-progress', `${max > 0 ? (window.scrollY / max) * 100 : 0}%`);
     };
-    const observed = root.querySelectorAll('.manifesto-grid, .flow-step, .cinema-panel, .section-heading, .feature-card, .control-grid article, .open-inner');
+    const observed = root.querySelectorAll('.manifesto-grid, .flow-step, .cinema-panel, .tour-copy, .tour-frame, .section-heading, .feature-card, .control-grid article, .open-inner');
     observed.forEach((element) => element.classList.add('will-reveal'));
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible'));
@@ -351,6 +382,62 @@ export default function Home() {
         <div className="cinema-shot">
           <div className="shot-label"><i /> TITLE VIEW</div>
           <img src="/streamee-details.png" alt="Streamee title details interface with cast, ratings and related titles" width="2000" height="1125" loading="lazy" />
+        </div>
+      </section>
+
+      <section className="tour-section section-shell" aria-labelledby="tour-title">
+        <div className="tour-copy">
+          <p className="kicker">INSIDE STREAMEE</p>
+          <h2 id="tour-title">More than a<br /><em>play button.</em></h2>
+          <p>Discovery, personal context, and source control share the same focused desktop space.</p>
+          <div className="tour-tabs" role="tablist" aria-label="Explore Streamee screens">
+            {productViews.map((view, index) => (
+              <button
+                key={view.id}
+                type="button"
+                role="tab"
+                id={`tour-tab-${view.id}`}
+                aria-controls="tour-panel"
+                aria-selected={activeView === index}
+                tabIndex={activeView === index ? 0 : -1}
+                onClick={() => setActiveView(index)}
+                onKeyDown={(event) => {
+                  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+                  event.preventDefault();
+                  const direction = event.key === 'ArrowRight' ? 1 : -1;
+                  const next = (index + direction + productViews.length) % productViews.length;
+                  setActiveView(next);
+                  document.getElementById(`tour-tab-${productViews[next].id}`)?.focus();
+                }}
+              >
+                <span>{view.index}</span>
+                <strong>{view.label}</strong>
+              </button>
+            ))}
+          </div>
+          <div className="tour-detail" aria-live="polite">
+            <strong>{productViews[activeView].title}</strong>
+            <p>{productViews[activeView].description}</p>
+          </div>
+        </div>
+        <div
+          className="tour-frame"
+          id="tour-panel"
+          role="tabpanel"
+          aria-labelledby={`tour-tab-${productViews[activeView].id}`}
+        >
+          <div className="tour-frame-bar">
+            <span><i /> LIVE PRODUCT VIEW</span>
+            <small>{productViews[activeView].index} / 03</small>
+          </div>
+          <img
+            key={productViews[activeView].src}
+            src={productViews[activeView].src}
+            alt={productViews[activeView].alt}
+            width="2000"
+            height="1125"
+            loading="lazy"
+          />
         </div>
       </section>
 
