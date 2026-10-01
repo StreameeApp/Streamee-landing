@@ -13,26 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://streamee.briandamp.chatgpt.site'),
+  metadataBase: new URL('https://streameeapp.github.io/Streamee-landing/'),
+  alternates: { canonical: 'https://streameeapp.github.io/Streamee-landing/' },
   title: 'Streamee — Your media. Beautifully yours.',
   description: 'A polished Windows media discovery and playback app, powered by MPV and built around your choices.',
   icons: {
-    icon: '/streamee-icon.png',
-    apple: '/streamee-icon.png',
+    icon: '/Streamee-landing/streamee-icon.png',
+    apple: '/Streamee-landing/streamee-icon.png',
   },
   openGraph: {
     title: 'Streamee — Your media. Beautifully yours.',
     description: 'Discover what to watch and experience every frame through a Windows desktop player built around you.',
-    url: 'https://streamee.briandamp.chatgpt.site',
+    url: 'https://streameeapp.github.io/Streamee-landing/',
     siteName: 'Streamee',
-    images: [{ url: '/og.png', width: 1792, height: 1024, alt: 'Streamee — Your media. Beautifully yours.' }],
+    images: [{ url: 'https://streameeapp.github.io/Streamee-landing/og.png', width: 1792, height: 1024, alt: 'Streamee — Your media. Beautifully yours.' }],
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Streamee — Your media. Beautifully yours.',
     description: 'A polished Windows media discovery and playback app, powered by MPV.',
-    images: ['/og.png'],
+    images: ['https://streameeapp.github.io/Streamee-landing/og.png'],
   },
 };
 

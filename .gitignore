@@ -19,6 +19,13 @@
 # misc
 .DS_Store
 *.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
+credentials*.json
+secrets*.json
 
 # debug
 npm-debug.log*
@@ -28,6 +35,7 @@ yarn-error.log*
 
 # local environment
 .env*
+*.local
 
 # deployment and generated files
 .vercel
@@ -36,3 +44,22 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# local tools, captures, and previous hosting provider
+/.openai/
+/.playwright-cli/
+/output/
+/test-results/
+/playwright-report/
+/.deebugee/
+/.mallee/
+/.codex/
+/.vscode/
+/.idea/
+*.tsbuildinfo
+*.log
+*.zip
+*.tar
+*.tar.gz
+Thumbs.db
+Desktop.ini

@@ -9,7 +9,7 @@ const GithubMark = () => (
 );
 
 const StreameeMark = ({ className = 'brand-mark' }: { className?: string }) => (
-  <span className={className} aria-hidden="true"><img src="/streamee-icon.png" alt="" /></span>
+  <span className={className} aria-hidden="true"><img src="/Streamee-landing/streamee-icon.png" alt="" /></span>
 );
 
 const ribbonText = <>DISCOVER <i /> WATCH <i /> FEEL EVERYTHING <i /> YOUR MEDIA <i /> YOUR RULES <i /></>;
@@ -21,7 +21,7 @@ const productViews = [
     label: 'Recommendations',
     title: 'A better next watch.',
     description: 'Jump from one title into a full field of related picks, with ratings and release context ready to scan.',
-    src: '/streamee-recommendations.png',
+    src: '/Streamee-landing/streamee-recommendations.png',
     alt: 'Streamee recommendations screen showing a personalized grid of related movies',
   },
   {
@@ -30,7 +30,7 @@ const productViews = [
     label: 'Statistics',
     title: 'Your history, made visible.',
     description: 'See watch time, streaks, activity, viewing habits, and the balance between movies and television.',
-    src: '/streamee-statistics.png',
+    src: '/Streamee-landing/streamee-statistics.png',
     alt: 'Streamee statistics dashboard showing watch time, viewing activity, and personal records',
   },
   {
@@ -39,7 +39,7 @@ const productViews = [
     label: 'Add-ons',
     title: 'Sources on your terms.',
     description: 'Install, test, prioritize, and manage compatible add-ons while sensitive URLs stay in Windows Credential Manager.',
-    src: '/streamee-addons.png',
+    src: '/Streamee-landing/streamee-addons.png',
     alt: 'Streamee add-on settings screen showing source installation and management controls',
   },
 ] as const;
@@ -306,7 +306,7 @@ export default function Home() {
               <div className="window-brand"><StreameeMark className="mini-mark" /> Streamee</div>
               <div className="window-controls"><i /><i /><i /></div>
             </div>
-            <img src="/streamee-board.png" alt="Streamee discovery board showing Continue Watching and a personal media library" width="2000" height="1125" fetchPriority="high" />
+            <img src="/Streamee-landing/streamee-board.png" alt="Streamee discovery board showing Continue Watching and a personal media library" width="2000" height="1125" fetchPriority="high" />
           </div>
           <aside className="floating-note note-left"><span className="note-icon">◫</span><span><small>LOCAL FIRST</small><strong>Your choices stay yours.</strong></span></aside>
           <aside className="floating-note note-right"><span className="note-icon">⌁</span><span><small>POWERED BY MPV</small><strong>Playback without compromise.</strong></span></aside>
@@ -381,7 +381,7 @@ export default function Home() {
         </div>
         <div className="cinema-shot">
           <div className="shot-label"><i /> TITLE VIEW</div>
-          <img src="/streamee-details.png" alt="Streamee title details interface with cast, ratings and related titles" width="2000" height="1125" loading="lazy" />
+          <img src="/Streamee-landing/streamee-details.png" alt="Streamee title details interface with cast, ratings and related titles" width="2000" height="1125" loading="lazy" />
         </div>
       </section>
 
